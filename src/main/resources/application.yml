@@ -1,0 +1,17 @@
+movies-datasource:
+  protocol: "postgresql"
+  host: "${MOVIES_DB_CLUSTER_SERVICE_HOST}"
+  port: ${MOVIES_DB_CLUSTER_SERVICE_PORT_POSTGRESQL}
+  database: "movies"
+  credentials: "/etc/movies-db"
+  pool:
+    min-connections: 1
+    max-connections: 3
+logging:
+  level:
+    ROOT: ERROR
+spring:
+  main:
+    banner-mode: off
+  jmx:
+    enabled: false

@@ -1,0 +1,16 @@
+movies-datasource:
+  protocol: "postgresql"
+  host: "localhost"
+  port: 12345
+  database: "movies"
+  credentials: "src/test/resources/creds"
+  pool:
+    min-connections: 1
+    max-connections: 3
+logging:
+  level:
+    ROOT: DEBUG
+    org:
+      springframework:
+        data:
+          r2dbc: TRACE
