@@ -1,0 +1,71 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: movies-spring-webflux
+  name: movies-spring-webflux
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: movies-spring-webflux
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: movies-spring-webflux
+    spec:
+      containers:
+        - image: localhost:32000/movies-spring-webflux:0.0.1
+          imagePullPolicy: Always
+          name: movies-spring-webflux
+          resources: {}
+          env:
+            - name: "JAVA_OPTS"
+              value: >-
+                -XX:+UseParallelGC
+                -Xms250m
+                -Xmx450m
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+          livenessProbe:
+            httpGet:
+              path: /actuator/info
+              port: 8080
+          volumeMounts:
+            - name: db-credentials
+              mountPath: "/etc/movies-db"
+              readOnly: true
+            - name: tmp
+              mountPath: "/tmp"
+              readOnly: false
+      volumes:
+        - name: db-credentials
+          secret:
+            secretName: moviesuser.movies-db-cluster.credentials
+        - name: tmp
+          emptyDir: {}
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: movies-spring-webflux
+  name: movies-spring-webflux
+spec:
+  ports:
+    - name: 8080-8080
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+  selector:
+    app: movies-spring-webflux
+  type: ClusterIP
+status:
+  loadBalancer: {}

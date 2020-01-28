@@ -3,6 +3,7 @@ package org.learning.by.example.movies.springwebflux.datasource;
 import io.r2dbc.spi.ConnectionFactories;
 import io.r2dbc.spi.ConnectionFactory;
 import io.r2dbc.spi.ConnectionFactoryOptions;
+import io.r2dbc.spi.Option;
 import org.learning.by.example.movies.springwebflux.converter.MovieReadConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -56,6 +57,7 @@ public class MoviesDataSource extends AbstractR2dbcConfiguration {
     @Override
     @Bean
     public ConnectionFactory connectionFactory() {
+        //https://github.com/r2dbc/r2dbc-postgresql/blob/master/src/main/java/io/r2dbc/postgresql/client/SSLMode.java
         return ConnectionFactories.get(ConnectionFactoryOptions.builder()
                 .option(PROTOCOL, dataSourceProperties.getProtocol())
                 .option(DRIVER, POOLING_DRIVER)
@@ -63,6 +65,8 @@ public class MoviesDataSource extends AbstractR2dbcConfiguration {
                 .option(PORT, dataSourceProperties.getPort())
                 .option(USER, userName)
                 .option(PASSWORD, password)
+                .option(SSL, true)
+                .option(Option.valueOf("sslMode"), "allow")
                 .option(DATABASE, dataSourceProperties.getDatabase())
                 .option(INITIAL_SIZE, dataSourceProperties.getPool().getMinConnections())
                 .option(MAX_SIZE, dataSourceProperties.getPool().getMaxConnections())
