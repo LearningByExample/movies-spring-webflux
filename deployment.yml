@@ -28,6 +28,10 @@ spec:
                 -XX:+UseParallelGC
                 -Xms100m
                 -Xmx325m
+                --add-opens java.base/jdk.internal.misc=ALL-UNNAMED
+                --add-opens java.base/java.nio=ALL-UNNAMED
+                --add-exports java.base/jdk.internal.misc=ALL-UNNAMED
+                -Dio.netty.tryReflectionSetAccessible=true
           readinessProbe:
             httpGet:
               path: /actuator/health

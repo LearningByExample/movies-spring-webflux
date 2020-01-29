@@ -17,7 +17,7 @@ jar -xf ../*.jar
 echo "jar extracted"
 
 echo "generate JVM modules list"
-EX_JVM_DEPS="jdk.crypto.ec"
+EX_JVM_DEPS="jdk.crypto.ec,jdk.unsupported"
 JVM_DEPS=$(jdeps -s --multi-release 11 -recursive -cp BOOT-INF/lib/*.jar BOOT-INF/classes | \
   grep -Po '(java|jdk)\..*' | \
   sort -u | \
