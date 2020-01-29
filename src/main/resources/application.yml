@@ -4,6 +4,7 @@ movies-datasource:
   port: ${MOVIES_DB_CLUSTER_SERVICE_PORT_POSTGRESQL}
   database: "movies"
   credentials: "/etc/movies-db"
+  read-only: true
   pool:
     min-connections: 1
     max-connections: 3

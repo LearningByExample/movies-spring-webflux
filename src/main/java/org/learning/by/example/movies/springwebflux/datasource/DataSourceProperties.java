@@ -11,6 +11,7 @@ public class DataSourceProperties {
     private String host;
     private Integer port;
     private String database;
+    private Boolean readOnly;
     private PoolConfig pool;
 
     public String getProtocol() {
@@ -51,6 +52,14 @@ public class DataSourceProperties {
 
     public void setDatabase(String database) {
         this.database = database;
+    }
+
+    public Boolean getReadOnly() {
+        return readOnly;
+    }
+
+    public void setReadOnly(Boolean readOnly) {
+        this.readOnly = readOnly;
     }
 
     public PoolConfig getPool() {

@@ -15,7 +15,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static io.r2dbc.pool.PoolingConnectionFactoryProvider.*;
 import static io.r2dbc.spi.ConnectionFactoryOptions.*;
@@ -57,7 +59,10 @@ public class MoviesDataSource extends AbstractR2dbcConfiguration {
     @Override
     @Bean
     public ConnectionFactory connectionFactory() {
-        //https://github.com/r2dbc/r2dbc-postgresql/blob/master/src/main/java/io/r2dbc/postgresql/client/SSLMode.java
+
+        Map<String, String> options = new HashMap<>();
+        options.put("default_transaction_read_only", dataSourceProperties.getReadOnly().toString());
+
         return ConnectionFactories.get(ConnectionFactoryOptions.builder()
                 .option(PROTOCOL, dataSourceProperties.getProtocol())
                 .option(DRIVER, POOLING_DRIVER)
@@ -71,6 +76,7 @@ public class MoviesDataSource extends AbstractR2dbcConfiguration {
                 .option(INITIAL_SIZE, dataSourceProperties.getPool().getMinConnections())
                 .option(MAX_SIZE, dataSourceProperties.getPool().getMaxConnections())
                 .option(VALIDATION_QUERY, "SELECT 1")
+                .option(Option.valueOf("options"), options)
                 .build());
     }
 }

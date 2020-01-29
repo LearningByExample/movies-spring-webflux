@@ -4,6 +4,7 @@ movies-datasource:
   port: 12345
   database: "movies"
   credentials: "src/test/resources/creds"
+  read-only: false
   pool:
     min-connections: 1
     max-connections: 3
