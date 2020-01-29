@@ -26,8 +26,8 @@ spec:
             - name: "JAVA_OPTS"
               value: >-
                 -XX:+UseParallelGC
-                -Xms250m
-                -Xmx450m
+                -Xms100m
+                -Xmx325m
           readinessProbe:
             httpGet:
               path: /actuator/health
